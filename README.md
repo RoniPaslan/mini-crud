@@ -1,7 +1,3 @@
-Berikut **README FINAL** yang **langsung sesuai requirement technical test Antariks**, sudah disesuaikan dengan **Laravel 12 + React + Tailwind**, dan mencerminkan **apa yang benar-benar Anda bangun** (CRUD, pagination, filter, debounce, validation, UI effort).
-
-Anda bisa **copy–paste 1:1** ke file `README.md`.
-
 ---
 
 # Test – Full Stack Developer – Roni Paslan
