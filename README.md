@@ -1,59 +1,205 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Berikut **README FINAL** yang **langsung sesuai requirement technical test Antariks**, sudah disesuaikan dengan **Laravel 12 + React + Tailwind**, dan mencerminkan **apa yang benar-benar Anda bangun** (CRUD, pagination, filter, debounce, validation, UI effort).
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Anda bisa **copy–paste 1:1** ke file `README.md`.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Test – Full Stack Developer – Roni Paslan
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📌 Overview
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This project is a **Mini CRUD Application** built as part of a technical test.
+The application manages **Products** with the following fields:
 
-## Learning Laravel
+* **Name**
+* **Amount**
+* **Quantity (Qty)**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+The app demonstrates clean architecture, proper validation, security awareness, and a user-friendly UI.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## 🛠 Tech Stack
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Backend
 
-### Premium Partners
+* **Laravel 12**
+* RESTful API
+* Eloquent ORM
+* Validation & Mass Assignment Protection
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Frontend
 
-## Contributing
+* **React.js** (rendered via Laravel + Vite)
+* **Tailwind CSS** (UI styling)
+* **Axios** (HTTP client)
+* **SweetAlert2** (user feedback)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🔄 Application Flow
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. User opens the application (React rendered inside Laravel Blade).
+2. Product list is fetched from Laravel API (`/api/products`).
+3. User can:
 
-## Security Vulnerabilities
+   * Create a new product
+   * Edit an existing product
+   * Delete a product (with confirmation)
+   * Search products by name
+   * Navigate products using pagination
+4. All operations update data in real time and provide clear feedback via alerts.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## ✨ Features Implemented
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### ✅ CRUD Functionality
+
+* Create product
+* Read product list
+* Update product
+* Delete product
+
+### ✅ Pagination (Server-side)
+
+* Uses Laravel `paginate()` to handle large datasets efficiently.
+* Prevents loading all records at once.
+
+### ✅ Search with Debounce
+
+* Product search by name.
+* Uses **debounce (500ms)** on the frontend to prevent excessive API calls while typing.
+
+### ✅ UI / UX
+
+* Clean layout using Tailwind CSS
+* Clear actions (Edit / Delete)
+* Confirmation dialog before delete
+* Success & error feedback using SweetAlert
+
+---
+
+## 🔐 Validation & Security
+
+### Backend Validation
+
+Implemented in Laravel controller:
+
+```php
+$request->validate([
+    'name'   => 'required|string|max:255',
+    'amount' => 'required|numeric|min:0',
+    'qty'    => 'required|integer|min:0',
+]);
+```
+
+**Why this is important:**
+
+* Prevents invalid or malicious input
+* Ensures data consistency
+* Protects database integrity
+
+### Mass Assignment Protection
+
+Model uses `$fillable` to explicitly allow safe fields:
+
+```php
+protected $fillable = ['name', 'amount', 'qty'];
+```
+
+**Reason:**
+
+* Prevents unauthorized fields from being injected into the database.
+
+---
+
+## 📦 API Endpoints
+
+| Method | Endpoint                  | Description                            |
+| ------ | ------------------------- | -------------------------------------- |
+| GET    | `/api/products`           | Get product list (pagination + search) |
+| POST   | `/api/products`           | Create product                         |
+| PUT    | `/api/products/{product}` | Update product                         |
+| DELETE | `/api/products/{product}` | Delete product                         |
+
+---
+
+## 🧠 Additional Notes
+
+* Pagination and filtering are handled on the **backend** to improve performance.
+* Debounced search reduces unnecessary server requests.
+* Code is structured for readability and maintainability.
+* No unnecessary libraries were added; everything is purposeful.
+
+---
+
+## 🚀 How to Run the Project
+
+### 1️⃣ Backend (Laravel)
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+App will run at:
+
+```
+http://localhost:8000
+```
+
+---
+
+### 2️⃣ Frontend (Vite + React)
+
+```bash
+npm install
+npm run dev
+```
+
+Vite dev server will run at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🌐 Live Demo
+
+* **Live URL:** *(to be provided)*
+* **Repository:** *(GitHub / GitLab link)*
+
+---
+
+## 🧾 Submission Format
+
+```
+Test – Full Stack Developer – Roni Paslan
+```
+
+Send to:
+
+* [antariks.recruitment@gmail.com](mailto:antariks.recruitment@gmail.com)
+* [admin@antariks.id](mailto:admin@antariks.id) (optional)
+
+---
+
+## ✅ Final Notes
+
+This project focuses on:
+
+* Correctness over complexity
+* Clean code and clear flow
+* Practical UI/UX decisions
+* Security and validation awareness
+
+Thank you for reviewing this submission.
+
+---
+
+
