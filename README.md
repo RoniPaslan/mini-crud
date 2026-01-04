@@ -1,7 +1,7 @@
 
 ---
 
-# Test – Full Stack Developer – Roni Paslan
+# Full Stack Developer – Roni Paslan
 
 ## 📌 Overview
 
