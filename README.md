@@ -166,25 +166,6 @@ http://localhost:5173
 
 ---
 
-## 🌐 Live Demo
-
-* **Live URL:** *(to be provided)*
-* **Repository:** *(GitHub / GitLab link)*
-
----
-
-## 🧾 Submission Format
-
-```
-Test – Full Stack Developer – Roni Paslan
-```
-
-Send to:
-
-* [antariks.recruitment@gmail.com](mailto:antariks.recruitment@gmail.com)
-* [admin@antariks.id](mailto:admin@antariks.id) (optional)
-
----
 
 ## ✅ Final Notes
 
