@@ -1,7 +1,6 @@
-// resources/js/components/ProductForm.jsx
 import { useEffect, useState } from "react";
 
-const ProductForm = ({ onSubmit, initial, loading }) => {
+const ProductForm = ({ onSubmit, initial, loading, submitLabel }) => {
   const [form, setForm] = useState({
     name: "",
     amount: "",
@@ -9,7 +8,11 @@ const ProductForm = ({ onSubmit, initial, loading }) => {
   });
 
   useEffect(() => {
-    if (initial) setForm(initial);
+    if (initial) {
+      setForm(initial);
+    } else {
+      setForm({ name: "", amount: "", qty: "" }); // reset ketika initial null
+    }
   }, [initial]);
 
   const handleChange = (e) => {
@@ -60,13 +63,12 @@ const ProductForm = ({ onSubmit, initial, loading }) => {
 
       <button
         disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 transition-colors duration-150"
       >
-        {loading ? "Saving..." : "Save"}
+        {loading ? (initial ? "Updating..." : "Saving...") : submitLabel || "Save"}
       </button>
     </form>
   );
 };
 
 export default ProductForm;
-

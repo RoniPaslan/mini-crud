@@ -8,28 +8,25 @@ import {
 } from "../utils/alert";
 
 const Products = () => {
-  // data
   const [products, setProducts] = useState([]);
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // pagination
+  // Pagination
   const [meta, setMeta] = useState({});
   const [page, setPage] = useState(1);
 
-  // search + debounce
+  // Search + debounce
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  // debounce search
+  // Debounce search input
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500);
+    const handler = setTimeout(() => setDebouncedSearch(search), 500);
     return () => clearTimeout(handler);
   }, [search]);
 
-  // load products
+  // Load products (pagination + search)
   const load = async (pageNumber = 1) => {
     try {
       const res = await axios.get("/api/products", {
@@ -47,7 +44,7 @@ const Products = () => {
     load(1);
   }, [debouncedSearch]);
 
-  // save / update product
+  // Create / Update product
   const save = async (data) => {
     try {
       setLoading(true);
@@ -55,7 +52,7 @@ const Products = () => {
       if (editing) {
         await axios.put(`/api/products/${editing.id}`, data);
         successAlert("Product updated successfully");
-        setEditing(null); // reset form
+        setEditing(null);
       } else {
         await axios.post("/api/products", data);
         successAlert("Product created successfully");
@@ -69,7 +66,7 @@ const Products = () => {
     }
   };
 
-  // delete product
+  // Delete product
   const remove = async (id) => {
     const result = await confirmDelete();
     if (!result.isConfirmed) return;
@@ -90,15 +87,15 @@ const Products = () => {
         onSubmit={save}
         initial={editing}
         loading={loading}
-        submitLabel={editing ? "Update" : "Save"} // dynamic button text
+        submitLabel={editing ? "Update" : "Save"}
       />
 
       {/* Search */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center my-4">
         <input
           type="text"
           placeholder="Search product..."
-          className="border rounded px-3 py-2 w-64 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="border rounded px-3 py-2 w-64 focus:outline-none focus:ring focus:ring-blue-300"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -126,22 +123,19 @@ const Products = () => {
             )}
 
             {products.map((p) => (
-              <tr
-                key={p.id}
-                className="border-b hover:bg-gray-50 transition-colors duration-150"
-              >
+              <tr key={p.id} className="border-b hover:bg-gray-50 transition-colors">
                 <td className="p-3">{p.name}</td>
                 <td className="p-3 text-center">{p.amount}</td>
                 <td className="p-3 text-center">{p.qty}</td>
                 <td className="p-3 text-center space-x-2">
                   <button
-                    className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors duration-150"
+                    className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                     onClick={() => setEditing(p)}
                   >
                     Edit
                   </button>
                   <button
-                    className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-150"
+                    className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
                     onClick={() => remove(p.id)}
                   >
                     Delete
@@ -163,15 +157,14 @@ const Products = () => {
               <button
                 disabled={page <= 1}
                 onClick={() => load(page - 1)}
-                className="px-3 py-1 border rounded disabled:opacity-50 hover:bg-gray-100"
+                className="px-3 py-1 border rounded disabled:opacity-50"
               >
                 Prev
               </button>
-
               <button
                 disabled={page >= meta.last_page}
                 onClick={() => load(page + 1)}
-                className="px-3 py-1 border rounded disabled:opacity-50 hover:bg-gray-100"
+                className="px-3 py-1 border rounded disabled:opacity-50"
               >
                 Next
               </button>
