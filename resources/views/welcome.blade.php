@@ -6,7 +6,7 @@
     <title>{{ config('app.name', 'MINI CRUD') }}</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ Vite::asset('resources/assets/logo.png') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('logo.png') }}" />
 
     @env('local')
         <!-- Dev server: React Refresh + Assets -->
